@@ -27,7 +27,9 @@ class ColorPicker extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.color != this.props.color) {
-      this.setDocumentBackgroundColor()
+      this.setDocumentBackgroundColor();
+      let cp = $("#colorpicker_input");
+      cp.spectrum("set", this.props.color);
     }
   }
 
@@ -63,11 +65,16 @@ class ColorEntry extends React.Component {
 
   }
 
+  colorSelected(e) {
+    // package up the passed-in onClick
+    this.props.onClick(e, this.props.color);
+  }
+
   render() {
-    let thumb_style = { 'background-color': this.props.color };
+    let thumb_style = { 'backgroundColor': this.props.color };
 
     return (
-      <div className="color_entry">
+      <div className="color_entry" onClick={this.colorSelected.bind(this)}>
         <div className="color_entry_thumb" style={thumb_style}></div>
         <div className="color_entry_label">
           {this.props.color}
@@ -84,7 +91,7 @@ class ColorList extends React.Component {
 
     let color_entries = this.props.color_list.map((ele, i) => {
       return (
-        <ColorEntry key={ele} color={ele} />
+        <ColorEntry key={ele} color={ele} onClick={this.props.onColorClick} />
       )
     });
 
@@ -171,6 +178,11 @@ class ColorDemo extends React.Component {
     }
   }
 
+  colorSelected(e, selected_color) {
+    console.log(selected_color)
+    this.setState({ 'color': selected_color })
+  }
+
   componentWillMount() {
     this.getColorList();
   }
@@ -180,7 +192,7 @@ class ColorDemo extends React.Component {
       <div className="color_demo">
         <ColorPicker color={this.state.color} onChange={this.updateColor.bind(this)} />
         <EmailComponent email={this.state.email} onChange={this.updateEmail.bind(this)} onLoadClick={this.getColorList.bind(this)} onSaveClick={this.addColor.bind(this)} />
-        <ColorList color_list={this.state.color_list} />
+        <ColorList color_list={this.state.color_list} onColorClick={this.colorSelected.bind(this)} />
         Email: {this.state.email || 'undefined'}<br />
         Color: {this.state.color}<br />
         Color_list: {this.state.color_list}
