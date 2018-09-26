@@ -1,13 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-/* 
-get
-post
-put
-delete
-*/
 
+/**
+ * Routes to save colors to an email address.
+ */
 router.get('/hello', (req, res) => res.send('Hello World! colors'))
 
 router.get('/:user_email/', listAllColors)
@@ -15,6 +12,11 @@ router.post('/:user_email/', addColors)
 router.put('/:user_email/:color', updateColor)
 router.delete('/:user_email/:color', deleteColor)
 
+/**
+ * Gets all colors for the email address.
+ * 
+ * @return json ["#cccccc", "#ff4sdd", ...]
+ */
 function listAllColors(req, res) {
     console.log("listall colors " + req.params);
 
@@ -38,6 +40,12 @@ function listAllColors(req, res) {
         })
 }
 
+/**
+ * Adds a list of colors to be saved for the email address.
+ * 
+ * @param Object body [{'color': '#ccaadd'}, {'color': '#ff223f'} ...]
+ * @return json saved_colors Returns colors saved.
+ */
 function addColors(req, res) {
     let models = req.app.get('models');
     let user_email = req.params.user_email;
@@ -62,6 +70,12 @@ function addColors(req, res) {
         })
 }
 
+/**
+ * Modify a color.
+ * 
+ * @param Object body {"color": "#ff339d"}
+ * @return json updated_color {"color": "#ff339f", "user_email": "someone@somewhere.com"}
+ */
 function updateColor(req, res) {
     let models = req.app.get('models')
     let user_email = req.params.user_email;
@@ -100,6 +114,11 @@ function updateColor(req, res) {
         })
 }
 
+/**
+ * Deletes the color from the email collection.
+ * 
+ * @return json status {"rows_deleted": 1}
+ */
 function deleteColor(req, res) {
     let models = req.app.get('models')
     let user_email = req.params.user_email;
