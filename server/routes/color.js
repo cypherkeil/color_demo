@@ -27,7 +27,11 @@ function listAllColors(req, res) {
         }
     })
         .then((found_colors) => {
-            return res.json(found_colors);
+            // we get a list of db objects back, return just the colors
+            return res.json(found_colors.map((ele) => {
+                return ele.color;
+            }))
+            //return res.json(found_colors);
         })
         .catch((err) => {
             return res.json(err)

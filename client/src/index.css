@@ -1,0 +1,43 @@
+body {
+  font: 14px "Avenir", "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
+button {
+  border: 1px #666666 solid;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.color_demo>div {
+  border: 1px #666666 solid;
+  background-color: #dfdfdf;
+  width: 300px;
+  margin: 12px;
+  padding: 9px;
+}
+
+/*****
+  colorlist component
+ *****/
+.color_entry {
+  width: 100px;
+  height: 34px;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  border: 1px #666666 solid;
+}
+
+.color_entry_thumb {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: 1px #666666 solid;
+  margin: 6px;
+}
+
+.color_entry_label {
+  position: relative;
+  top: -26px;
+  left: 32px;
+}
