@@ -229,7 +229,11 @@ class ColorDemo extends React.Component {
       })
       .then((json) => {
         console.log(json)
-        self.setState({ 'color_list': json })
+        // get back a list of color objects, just make a flat list
+        let color_list = json.map((ele, i) => {
+          return ele["color"];
+        })
+        self.setState({ 'color_list': color_list })
       })
   }
 
@@ -245,7 +249,7 @@ class ColorDemo extends React.Component {
 
     let self = this;
 
-    let body = [{ 'color': this.state.color }]
+    let body = [this.state.color]
     // uri = '/:email/'
     // POST [{color: '#ffffff'}, ...]
     let uri = "/" + this.state.email;

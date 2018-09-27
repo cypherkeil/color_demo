@@ -15,7 +15,22 @@ router.delete('/:user_email/:color', deleteColor)
 /**
  * Gets all colors for the email address.
  * 
- * @return json ["#cccccc", "#ff4sdd", ...]
+ * This takes no body parameter.
+ * 
+ * @return json colors [
+    {
+        "color": "#ccaadd",
+        "user_email": "someone@somewhere.com",
+        "created_at": "2018-09-27T13:57:10.190Z",
+        "updated_at": "2018-09-27T13:57:10.190Z"
+    },
+    {
+        "color": "#ff223f",
+        "user_email": "someone@somewhere.com",
+        "created_at": "2018-09-27T13:57:10.190Z",
+        "updated_at": "2018-09-27T13:57:10.190Z"
+    }
+]
  */
 function listAllColors(req, res) {
     console.log("listall colors " + req.params);
@@ -29,11 +44,13 @@ function listAllColors(req, res) {
         }
     })
         .then((found_colors) => {
+            /*
             // we get a list of db objects back, return just the colors
             return res.json(found_colors.map((ele) => {
                 return ele.color;
             }))
-            //return res.json(found_colors);
+            */
+            return res.json(found_colors);
         })
         .catch((err) => {
             return res.json(err)
@@ -43,8 +60,21 @@ function listAllColors(req, res) {
 /**
  * Adds a list of colors to be saved for the email address.
  * 
- * @param Object body [{'color': '#ccaadd'}, {'color': '#ff223f'} ...]
- * @return json saved_colors Returns colors saved.
+ * @param Object body ['#ccaadd', '#ff223f', ...]
+ * @return json saved_colors Returns colors saved. [
+    {
+        "color": "#ccaadd",
+        "user_email": "someone@somewhere.com",
+        "created_at": "2018-09-27T13:57:10.190Z",
+        "updated_at": "2018-09-27T13:57:10.190Z"
+    },
+    {
+        "color": "#ff223f",
+        "user_email": "someone@somewhere.com",
+        "created_at": "2018-09-27T13:57:10.190Z",
+        "updated_at": "2018-09-27T13:57:10.190Z"
+    }
+]
  */
 function addColors(req, res) {
     let models = req.app.get('models');
@@ -55,9 +85,9 @@ function addColors(req, res) {
     console.log(JSON.stringify(body, null, 2))
 
     let updated_body = body.map((ele, i) => {
-        ele["user_email"] = user_email;
-        console.log(ele)
-        return ele
+        let new_ele = { "color": ele, "user_email": user_email }
+        console.log(new_ele)
+        return new_ele
     })
     console.log('udated body ' + JSON.stringify(updated_body))
 
@@ -117,15 +147,15 @@ function updateColor(req, res) {
 /**
  * Deletes the color from the email collection.
  * 
+ * Does not take a body parameter.
+ * 
  * @return json status {"rows_deleted": 1}
  */
 function deleteColor(req, res) {
     let models = req.app.get('models')
     let user_email = req.params.user_email;
-    let body = req.body
 
     console.log('deleteUser called:')
-    console.log(JSON.stringify(body, null, 2))
 
     return models.saved_colors.destroy({
         where: {
