@@ -1,8 +1,8 @@
 **Color Demo**
 
-This is a brief demo demonstrating an Express API and React front-end built on the same server. It allows you to choose a set of colors in the web browser and then save them to a collection by email address. Colors saved to an email address can be retrieved and reselected if desired.
+This is a brief example demonstrating an Express API and React front-end built on the same server. It allows you to choose a set of colors in the web browser and then save them to a collection by email address. Colors saved to an email address can be retrieved and reselected if desired.
 
-Thanks to [Node](https://nodejs.org/), [Express](http://expressjs.com/), [Sequelize](http://docs.sequelizejs.com/), [React](https://reactjs.org/), [create-react-app](https://github.com/facebook/create-react-app), and many others.
+Thanks to [Node](https://nodejs.org/), [Express](http://expressjs.com/), [Sequelize](http://docs.sequelizejs.com/), [React](https://reactjs.org/), [create-react-app](https://github.com/facebook/create-react-app), [Spectrum colorpicker](https://bgrins.github.io/spectrum/) and many others.
 
 ---
 
@@ -28,7 +28,7 @@ Clone this repository.
 
 ## RESTful API
 
-Here is a description of the API defined by the demo. There is no authentication.
+Here is a description of the API defined by the demo. There is no authentication. Color names in the uri omit the pound sign: `#`. So a uri for the color `#aabbcc` would be `/someone@somewhere.com/aabbcc`.
 
 ### GET /:user_email
 
@@ -88,6 +88,12 @@ Here is a description of the API defined by the demo. There is no authentication
 ```javascript
 {"rows_deleted": 1}
 ```
+
+---
+
+## Testing
+
+Run `npm run test` to run tests.
 
 ---
 
