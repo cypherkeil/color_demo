@@ -11,12 +11,7 @@ app.use(body_parser.json());
 var routes = require('./routes');
 app.use('/', routes);
 
-console.log("Syncing database models ...");
-models.sequelize.sync({ force: true })
-    .then(() => {
+// set models on app so it can be retrieved in other places
+app.set('models', models);
 
-        console.log("Database models synced.");
-        app.set('models', models);
-
-        return app.listen(3003, () => console.log('App listening on port 3003!'));
-    });
+module.exports = app;

@@ -89,7 +89,7 @@ function addColors(req, res) {
         console.log(new_ele)
         return new_ele
     })
-    console.log('udated body ' + JSON.stringify(updated_body))
+    console.log('updated body ' + JSON.stringify(updated_body))
 
     return models.saved_colors.bulkCreate(updated_body)
         .then((create_response) => {
@@ -111,6 +111,8 @@ function updateColor(req, res) {
     let user_email = req.params.user_email;
     let body = req.body
 
+    let color = "#" + req.params.color;
+
     console.log('updateUser called:')
     console.log(JSON.stringify(body, null, 2))
 
@@ -118,7 +120,7 @@ function updateColor(req, res) {
         returning: true,
         where: {
             user_email: user_email,
-            color: req.params.color
+            color: color
         }
     })
         .then((update_response) => {
@@ -155,12 +157,14 @@ function deleteColor(req, res) {
     let models = req.app.get('models')
     let user_email = req.params.user_email;
 
+    let color = "#" + req.params.color;
+
     console.log('deleteUser called:')
 
     return models.saved_colors.destroy({
         where: {
             user_email: user_email,
-            color: req.params.color
+            color: color
         }
     })
         .then((num_rows) => {
