@@ -58,7 +58,9 @@ class ColorPicker extends React.Component {
     return (
       <div className="color_picker">
         <input id='colorpicker_input' />
-        color picker: {this.props.color}
+        <span className="color_picker_label">
+          color: {this.props.color}
+        </span>
       </div>
     );
   }

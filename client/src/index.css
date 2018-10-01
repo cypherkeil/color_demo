@@ -18,6 +18,14 @@ button {
 }
 
 /*****
+  colorpicker component
+ *****/
+
+.color_picker_label {
+  margin-left: 12px;
+}
+
+/*****
   colorlist component
  *****/
 .color_entry {
