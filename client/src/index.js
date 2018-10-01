@@ -310,9 +310,6 @@ class ColorDemo extends React.Component {
         <ColorPicker color={this.state.color} onChange={this.updateColor.bind(this)} />
         <EmailComponent email={this.state.email} onChange={this.updateEmail.bind(this)} onLoadClick={this.getColorList.bind(this)} onSaveClick={this.addColor.bind(this)} />
         <ColorList color_list={this.state.color_list} onColorClick={this.colorSelected.bind(this)} />
-        Email: {this.state.email || 'undefined'}<br />
-        Color: {this.state.color}<br />
-        Color_list: {this.state.color_list}
       </div>
     );
   }

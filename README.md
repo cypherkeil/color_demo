@@ -20,8 +20,16 @@ Clone this repository.
     }
 }
 ```
-4. ```npm run build``` Build the static files for the React front-end. 
-5. ```npm run start``` Run the express server (which will also serve the React front-end).
+4. Build the static files for the React front-end in the `client/` directory.
+```
+cd client/
+npm run build
+``` 
+5. Run the express server (which will also serve the React front-end) in the root `color_demo/` directory.
+```
+cd ../
+npm run start
+```
 6. Visit the page at `http://localhost:3003/`.
 
 ---
