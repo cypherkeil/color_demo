@@ -1,6 +1,6 @@
 **Color Demo**
 
-This is a brief example demonstrating an Express API and React front-end built on the same server. It allows you to choose a set of colors in the web browser and then save them to a collection by email address. Colors saved to an email address can be retrieved and reselected if desired.
+This is a brief example demonstrating an Express API and React front-end built on the same server. It allows you to choose a set of colors in the web browser and then save them to a collection. Colors saved to a collection can be retrieved and reselected if desired.
 
 Thanks to [Node](https://nodejs.org/), [Express](http://expressjs.com/), [Sequelize](http://docs.sequelizejs.com/), [React](https://reactjs.org/), [create-react-app](https://github.com/facebook/create-react-app), [Spectrum colorpicker](https://bgrins.github.io/spectrum/) and many others.
 
@@ -20,17 +20,26 @@ Clone this repository.
     }
 }
 ```
-4. Build the static files for the React front-end in the `client/` directory.
+4. Install the server files by running `npm install` in the root repository directory.
+```
+cd <color_demo>
+npm install
+```
+5. Install the client files by running `npm install` in the `client/` subdirectory.
 ```
 cd client/
+npm install
+```
+6. Build the static files for the React front-end in the `client/` directory.
+```
 npm run build
 ``` 
-5. Run the express server (which will also serve the React front-end) in the root `color_demo/` directory.
+7. Run the express server (which will also serve the React front-end) in the root `color_demo/` directory.
 ```
 cd ../
 npm run start
 ```
-6. Visit the page at `http://localhost:3003/`.
+8. Visit the page at `http://localhost:3003/`.
 
 ---
 
@@ -38,7 +47,7 @@ npm run start
 
 Here is a description of the API defined by the demo. There is no authentication. Color names in the uri omit the pound sign: `#`. So a uri for the color `#aabbcc` would be `/someone@somewhere.com/aabbcc`.
 
-### GET /:user_email
+### GET /:collection_name
 
 * body: None
 * returns: JSON
@@ -54,7 +63,7 @@ Here is a description of the API defined by the demo. There is no authentication
 
 ---
 
-### POST /:user_email
+### POST /:collection_name
 
 * body:
 ```javascript
@@ -73,7 +82,7 @@ Here is a description of the API defined by the demo. There is no authentication
 
 ---
 
-### PUT /:user_email/:color
+### PUT /:collection_name/:color
 
 * body:
 ```javascript
@@ -89,7 +98,7 @@ Here is a description of the API defined by the demo. There is no authentication
 
 ---
 
-### DELETE /:user_email/:color
+### DELETE /:collection_name/:color
 
 * body: None
 * returns: JSON
