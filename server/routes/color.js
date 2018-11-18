@@ -3,30 +3,30 @@ var router = express.Router();
 
 
 /**
- * Routes to save colors to an email address.
+ * Routes to save colors to an collection.
  */
 router.get('/hello', (req, res) => res.send('Hello World! colors'))
 
-router.get('/:user_email/', listAllColors)
-router.post('/:user_email/', addColors)
-router.put('/:user_email/:color', updateColor)
-router.delete('/:user_email/:color', deleteColor)
+router.get('/:collection_name/', listAllColors)
+router.post('/:collection_name/', addColors)
+router.put('/:collection_name/:color', updateColor)
+router.delete('/:collection_name/:color', deleteColor)
 
 /**
- * Gets all colors for the email address.
+ * Gets all colors for the collection.
  * 
  * This takes no body parameter.
  * 
  * @return json colors [
     {
         "color": "#ccaadd",
-        "user_email": "someone@somewhere.com",
+        "collection_name": "nice_colors",
         "created_at": "2018-09-27T13:57:10.190Z",
         "updated_at": "2018-09-27T13:57:10.190Z"
     },
     {
         "color": "#ff223f",
-        "user_email": "someone@somewhere.com",
+        "collection_name": "nice_colors",
         "created_at": "2018-09-27T13:57:10.190Z",
         "updated_at": "2018-09-27T13:57:10.190Z"
     }
@@ -35,12 +35,12 @@ router.delete('/:user_email/:color', deleteColor)
 function listAllColors(req, res) {
     console.log("listall colors " + req.params);
 
-    let user_email = req.params.user_email;
+    let collection_name = req.params.collection_name;
     let models = req.app.get('models');
 
     return models.saved_colors.findAll({
         'where': {
-            'user_email': user_email
+            'collection_name': collection_name
         }
     })
         .then((found_colors) => {
@@ -58,19 +58,19 @@ function listAllColors(req, res) {
 }
 
 /**
- * Adds a list of colors to be saved for the email address.
+ * Adds a list of colors to be saved for the collection.
  * 
  * @param Object body ['#ccaadd', '#ff223f', ...]
  * @return json saved_colors Returns colors saved. [
     {
         "color": "#ccaadd",
-        "user_email": "someone@somewhere.com",
+        "collection_name": "nice_colors",
         "created_at": "2018-09-27T13:57:10.190Z",
         "updated_at": "2018-09-27T13:57:10.190Z"
     },
     {
         "color": "#ff223f",
-        "user_email": "someone@somewhere.com",
+        "collection_name": "nice_colors",
         "created_at": "2018-09-27T13:57:10.190Z",
         "updated_at": "2018-09-27T13:57:10.190Z"
     }
@@ -78,14 +78,14 @@ function listAllColors(req, res) {
  */
 function addColors(req, res) {
     let models = req.app.get('models');
-    let user_email = req.params.user_email;
+    let collection_name = req.params.collection_name;
     let body = req.body
-    console.log('user email ' + user_email)
+    console.log('collection name ' + collection_name)
     console.log('addColors.called: ')
     console.log(JSON.stringify(body, null, 2))
 
     let updated_body = body.map((ele, i) => {
-        let new_ele = { "color": ele, "user_email": user_email }
+        let new_ele = { "color": ele, "collection_name": collection_name }
         console.log(new_ele)
         return new_ele
     })
@@ -104,11 +104,11 @@ function addColors(req, res) {
  * Modify a color.
  * 
  * @param Object body {"color": "#ff339d"}
- * @return json updated_color {"color": "#ff339f", "user_email": "someone@somewhere.com"}
+ * @return json updated_color {"color": "#ff339f", "collection_name": "nice_colors"}
  */
 function updateColor(req, res) {
     let models = req.app.get('models')
-    let user_email = req.params.user_email;
+    let collection_name = req.params.collection_name;
     let body = req.body
 
     let color = "#" + req.params.color;
@@ -119,7 +119,7 @@ function updateColor(req, res) {
     return models.saved_colors.update(body, {
         returning: true,
         where: {
-            user_email: user_email,
+            collection_name: collection_name,
             color: color
         }
     })
@@ -130,7 +130,7 @@ function updateColor(req, res) {
                 [
                     {
                         "color": "aaaaaa",
-                        "user_email": "blah",
+                        "collection_name": "blah",
                         "created_at": "2018-09-25T15:54:53.753Z",
                         "updated_at": "2018-09-25T15:55:21.446Z"
                     }
@@ -147,7 +147,7 @@ function updateColor(req, res) {
 }
 
 /**
- * Deletes the color from the email collection.
+ * Deletes the color from the collection.
  * 
  * Does not take a body parameter.
  * 
@@ -155,7 +155,7 @@ function updateColor(req, res) {
  */
 function deleteColor(req, res) {
     let models = req.app.get('models')
-    let user_email = req.params.user_email;
+    let collection_name = req.params.collection_name;
 
     let color = "#" + req.params.color;
 
@@ -163,7 +163,7 @@ function deleteColor(req, res) {
 
     return models.saved_colors.destroy({
         where: {
-            user_email: user_email,
+            collection_name: collection_name,
             color: color
         }
     })

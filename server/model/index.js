@@ -20,7 +20,7 @@ const SavedColors = sequelize.define('saved_colors', {
         type: Sequelize.STRING,
         primaryKey: true
     },
-    user_email: {
+    collection_name: {
         type: Sequelize.STRING,
         primaryKey: true
     }

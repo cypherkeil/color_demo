@@ -42,7 +42,7 @@ class ColorPicker extends React.Component {
    * If our color property changed, update the color in the colorpicker and document background.
    */
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.color != this.props.color) {
+    if (prevProps.color !== this.props.color) {
       this.setDocumentBackgroundColor();
       let cp = $("#colorpicker_input");
       cp.spectrum("set", this.props.color);
@@ -67,27 +67,27 @@ class ColorPicker extends React.Component {
 }
 
 /**
- * Small component that displays an input for email address, with 'Save' and 'Load' options to
- * allow saving colors to or loading colors from that email address.
+ * Small component that displays an input for a collection, with 'Save' and 'Load' options to
+ * allow saving colors to or loading colors from that collection.
  * 
- * @param String email_value The email address, undefined for not set.
- * @param onChange function onChange function for when the email address is updated.
+ * @param String collection_name The collection name, undefined for not set.
+ * @param onChange function onChange function for when the name is updated.
  * @param onSaveClick function onClick function for when the 'Save' button is clicked.
  * @param onLoadClick function onClick function for when the 'Load' button is clicked.
  */
-class EmailComponent extends React.Component {
+class CollectionNameComponent extends React.Component {
 
   /**
    * Lifecycle.
    * 
-   * Sets up email input, 'Save', 'Load' buttons.
+   * Sets up collection_name input, 'Save', 'Load' buttons.
    */
   render() {
-    let email_value = (this.props.email) ? this.props.email : "collection name";
+    let collection_name_value = (this.props.collection_name) ? this.props.collection_name : "collection name";
 
     return (
       <div>
-        <input type="text" size="20" value={email_value} onChange={this.props.onChange} />
+        <input type="text" size="20" value={collection_name_value} onChange={this.props.onChange} />
         <button onClick={this.props.onSaveClick}>Save</button>
         <button onClick={this.props.onLoadClick}>Load</button>
       </div>
@@ -178,9 +178,9 @@ class ColorDemo extends React.Component {
     this.state = {
       // The currently selected color
       'color': "#ccff66",
-      // The email that is set (empty for not set)
-      'email': '',
-      // The list of saved colors associated with the email if loaded.
+      // The collection name that is set (empty for not set)
+      'collection_name': '',
+      // The list of saved colors associated with the collection name if loaded.
       'color_list': []
     }
   }
@@ -198,30 +198,30 @@ class ColorDemo extends React.Component {
   }
 
   /**
-   * Callback for when the email address has changed.
+   * Callback for when the collectionname has changed.
    * 
    * @param event e The event object passed to the handler.
    * @return None calls self.setState().
    */
-  updateEmail(e) {
-    let email_address = e.target.value;
-    this.setState({ 'email': email_address });
+  updateCollectionName(e) {
+    let collection_name = e.target.value;
+    this.setState({ 'collection_name': collection_name });
   }
 
   /**
-   * If there is a valid email set, query the API to receive the colors saved for that email.
+   * If there is a valid collection name set, query the API to receive the colors saved for that collection.
    * 
    * @return None calls self.setState().
    */
   getColorList() {
-    if (!this.state.email) {
+    if (!this.state.collection_name) {
       return this.state.color_list;
     }
 
     let self = this;
 
-    // uri = '/:email/'
-    let uri = "/" + this.state.email;
+    // uri = '/:collection_name/'
+    let uri = "/" + this.state.collection_name;
     fetch(uri, {
       'method': 'GET'
     })
@@ -240,21 +240,21 @@ class ColorDemo extends React.Component {
   }
 
   /**
-   * If there is a valid email set, save the active color to the email via the API.
+   * If there is a valid collection name set, save the active color to the collection via the API.
    * 
    * @return None Calls this.getColorList() when finished.
    */
   addColor() {
-    if (!this.state.email) {
+    if (!this.state.collection_name) {
       return;
     }
 
     let self = this;
 
     let body = [this.state.color]
-    // uri = '/:email/'
+    // uri = '/:collection_name/'
     // POST [{color: '#ffffff'}, ...]
-    let uri = "/" + this.state.email;
+    let uri = "/" + this.state.collection_name;
     fetch(uri, {
       'method': 'POST',
       'headers': {
@@ -269,12 +269,12 @@ class ColorDemo extends React.Component {
   }
 
   /**
-   * If there is a valid email set, delete the currently selected color.
+   * If there is a valid collection name set, delete the currently selected color.
    * 
    * Not implemented yet.
    */
   deleteColor() {
-    if (!this.state.email) {
+    if (!this.state.collection_name) {
       return;
     }
   }
@@ -304,13 +304,13 @@ class ColorDemo extends React.Component {
   /**
    * Lifecycle.
    * 
-   * Puts together the ColorPicker, EmailComponent, and ColorList components.
+   * Puts together the ColorPicker, CollectionNameComponent, and ColorList components.
    */
   render() {
     return (
       <div className="color_demo">
         <ColorPicker color={this.state.color} onChange={this.updateColor.bind(this)} />
-        <EmailComponent email={this.state.email} onChange={this.updateEmail.bind(this)} onLoadClick={this.getColorList.bind(this)} onSaveClick={this.addColor.bind(this)} />
+        <CollectionNameComponent collection_name={this.state.collection_name} onChange={this.updateCollectionName.bind(this)} onLoadClick={this.getColorList.bind(this)} onSaveClick={this.addColor.bind(this)} />
         <ColorList color_list={this.state.color_list} onColorClick={this.colorSelected.bind(this)} />
       </div>
     );

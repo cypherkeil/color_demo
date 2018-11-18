@@ -45,7 +45,7 @@ npm run start
 
 ## RESTful API
 
-Here is a description of the API defined by the demo. There is no authentication. Color names in the uri omit the pound sign: `#`. So a uri for the color `#aabbcc` would be `/someone@somewhere.com/aabbcc`.
+Here is a description of the API defined by the demo. There is no authentication. Color names in the uri omit the pound sign: `#`. So a uri for the color `#aabbcc` would be `/nice_colors/aabbcc`.
 
 ### GET /:collection_name
 
@@ -54,10 +54,10 @@ Here is a description of the API defined by the demo. There is no authentication
 ```javascript
 [
     {"color": "#aabbcc",
-     "email": "someone@somewhere.com"}, 
+     "collection_name": "nice_colors"}, 
 
     {"color": "#336611",
-     "email": "someone@somewhere.com"}
+     "collection_name": "nice_colors"}
 ]
 ```
 
@@ -73,10 +73,10 @@ Here is a description of the API defined by the demo. There is no authentication
 ```javascript
 [
     {"color": "#ffaacc",
-     "email": "someone@somewhere.com"}, 
+     "collection_name": "nice_colors"}, 
 
     {"color": "#444444",
-     "email": "someone@somewhere.com"}
+     "collection_name": "nice_colors"}
 ]
 ```
 
@@ -92,7 +92,7 @@ Here is a description of the API defined by the demo. There is no authentication
 ```javascript
 {
     "color": "#cccccc",
-    "user_email": "someone@somewhere.com"
+    "collection_name": "nice_colors"
 }
 ```
 
